@@ -11,4 +11,6 @@ public interface UserService {
     UserInfoEntity addUser(UserInfoEntity user);
 
     Integer deleteUser(int id);
+
+
 }

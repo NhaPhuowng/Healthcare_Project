@@ -9,6 +9,8 @@ import team.medical.healthcare.model.UserModel;
 import team.medical.healthcare.repository.entity.UserInfoEntity;
 import team.medical.healthcare.service.UserService;
 
+import javax.websocket.server.PathParam;
+
 @Controller
 @RequestMapping("/user")
 public class UserController {
@@ -31,6 +33,33 @@ public class UserController {
         user.setSaltPassword("");
         return ResponseEntity.ok().body(user);
     }
+
+
+    @RequestMapping("/getIn4")
+    @GetMapping
+    public ResponseEntity<UserInfoEntity> loginn(@RequestParam(name = "phoneNumber") String phone_number) {
+        UserInfoEntity user = userService.getUserByPhoneNumber(phone_number);
+
+       if (user == null)
+           return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+
+       user.setPassword("");
+       user.setSaltPassword("");
+       return ResponseEntity.ok().body(user);
+    }
+
+//    @GetMapping("/{phoneNumber}")
+//    public ResponseEntity<UserInfoEntity> login(@PathVariable(name = "phoneNumber") String phone_number) {
+//        UserInfoEntity user = userService.getUserByPhoneNumber(phone_number);
+//
+//        if (user == null)
+//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+//
+//        user.setPassword("");
+//        user.setSaltPassword("");
+//        return ResponseEntity.ok().body(user);
+//    }
+
 
     @PostMapping("/addUser")
     public ResponseEntity<UserInfoEntity> addUser(@RequestBody UserModel user){
